@@ -5,10 +5,10 @@ const client = require("../../database/client");
 const browse = async (req, res, next) => {
   try {
     // Fetch all items from the database
-    const items = await client.query("SELECT * FROM items");
+    const [products] = await client.query("SELECT p.id, p.Nom, p.Rayon_id, p.Statut_id FROM produit as p INNER JOIN statut as s ON s.id = p.statut_id INNER JOIN rayon as r on r.id = p.Rayon_id");
 
     // Respond with the items in JSON format
-    res.json(items);
+    res.status(200).json(products);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
@@ -19,7 +19,7 @@ const browse = async (req, res, next) => {
 const read = async (req, res, next) => {
   try {
     // Fetch a specific item from the database based on the provided ID
-    const item = await client.query("SELECT * FROM items where id = ? ", [
+    const item = await client.query("SELECT * FROM produit where id = ? ", [
       req.params.id,
     ]);
 
@@ -46,7 +46,7 @@ const add = async (req, res, next) => {
 
   try {
     // Insert the item into the database
-    const insertId = await client.query("INSERT INTO items(title) VALUES (?)", [
+    const insertId = await client.query("INSERT INTO produit(name) VALUES (?)", [
       item.title,
     ]);
 
