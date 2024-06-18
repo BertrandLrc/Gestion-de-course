@@ -5,7 +5,7 @@ const client = require("../../database/client");
 const browse = async (req, res, next) => {
   try {
     // Fetch all items from the database
-    const [products] = await client.query("SELECT p.id, p.Nom, p.Rayon_id, p.Statut_id FROM produit as p INNER JOIN statut as s ON s.id = p.statut_id INNER JOIN rayon as r on r.id = p.Rayon_id");
+    const [products] = await client.query("SELECT p.id, p.Nom, p.Rayon_id, p.Statut_id, r.Nom as Rayon_Nom, s.Nom as Statut_Nom FROM produit as p INNER JOIN statut as s ON s.id = p.statut_id INNER JOIN rayon as r on r.id = p.Rayon_id");
 
     // Respond with the items in JSON format
     res.status(200).json(products);
