@@ -1,5 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import ProductDetails from "./components/ProductDetails";
+import AddItemForm from "./components/AddItemForm";
+
 import "./App.css";
 
 function App() {
@@ -8,6 +10,7 @@ function App() {
   return (
     <>
       <h1 className="title">Ma liste de course</h1>
+      <AddItemForm />
       <div className="header">
         <h2>Nom du produit</h2>
         <h2>Rayon</h2>

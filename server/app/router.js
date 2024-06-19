@@ -12,7 +12,7 @@ const productActions = require("./controllers/productActions");
 // Route to get a list of items
 router.get("/products", productActions.browse);
 
-
+router.post("/products", productActions.add);
 
 
 /* ************************************************************************* */

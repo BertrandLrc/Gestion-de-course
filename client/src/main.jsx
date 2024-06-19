@@ -4,14 +4,20 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App";
+import connexion from "./services/connexion";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    loader: () =>
-      fetch("http://localhost:3310/api/products")
-      .then(response => response.json())
+    loader: async () => {
+      try {
+        const ingredients = await connexion.get("/api/products");
+        return ingredients.data;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
 ]);
 
