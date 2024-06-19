@@ -9,4 +9,3 @@ function ProductDetails({ item }) {
 }
 
 export default ProductDetails;
-

@@ -54,7 +54,7 @@ const add = async (req, res, next) => {
     );
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ id: insertId[0].insertId });
+    res.status(201).json({ id: insertId[0].insertId, ...req.body });
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
