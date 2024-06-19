@@ -5,7 +5,9 @@ const client = require("../../database/client");
 const browse = async (req, res, next) => {
   try {
     // Fetch all items from the database
-    const [products] = await client.query("SELECT p.id, p.Nom, p.Rayon_id, p.Statut_id, r.Nom as Rayon_Nom, s.Nom as Statut_Nom FROM produit as p INNER JOIN statut as s ON s.id = p.statut_id INNER JOIN rayon as r on r.id = p.Rayon_id");
+    const [products] = await client.query(
+      "SELECT p.id, p.Nom, p.Rayon_id, p.Statut_id, r.Nom as Rayon_Nom, s.Nom as Statut_Nom FROM produit as p INNER JOIN statut as s ON s.id = p.statut_id INNER JOIN rayon as r on r.id = p.Rayon_id"
+    );
 
     // Respond with the items in JSON format
     res.status(200).json(products);
@@ -46,12 +48,13 @@ const add = async (req, res, next) => {
 
   try {
     // Insert the item into the database
-    const insertId = await client.query("INSERT INTO produit(name) VALUES (?)", [
-      item.title,
-    ]);
+    const insertId = await client.query(
+      "INSERT INTO produit(Nom, Rayon_id, Statut_id) VALUES (?, ?, ?)",
+      [item.Nom, item.Rayon_id, item.Statut_id]
+    );
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId });
+    res.status(201).json({ id: insertId[0].insertId });
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
